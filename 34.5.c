@@ -12,39 +12,45 @@ int main() {
         printf("Not opened\n");
         return 1;
     }
-    FILE *fe = NULL;
-    fe = fopen("new.txt", "a+");
+
     char ptr[1000];
     while (!feof(fp)) {
-        FILE *fe = NULL;
-        fe = fopen("new.txt", "a+");
-        fgets(ptr, sizeof(ptr), fp);
-//        lines++;
-        fseek(fe, 0, SEEK_SET);
-        fputs(ptr, fe);
-        fclose(fe);
+        fgets(ptr, 1000, fp);
+        lines++;
+
 
     }
-/*
-    char *array = (char*)malloc(sizeof(ptr) * 64);
+    char** array;
+    array = (char**)malloc(lines*1000 * sizeof(char*));
     fseek(fp, 0, SEEK_SET);
-    while (!feof(fp))
+    int i = 0;
+    while (!feof(fp) || i > lines)
     {
-        array = fgets(ptr, 1000, fp);
-        puts(array);
-//        array[lines-1][sizeof[ptr]
+        fgets(ptr, 1000, fp);
+        array[i] = ptr;
+        puts(ptr);
+        puts(array[i]);
+        i++;
+    }
 
-    }
     FILE *fe = NULL;
-    fe = fopen("new.txt", "w+");
-    for(int i = lines-1; lines >= 0;  lines--){
-        ptr[1000] = array[i];
-        fputs(ptr, fe);
+    fe = fopen("new2.txt", "w+");
+    if (fe == NULL) {
+        printf("Not opened\n");
+        return 1;
     }
-*/
+
+    while(lines >= 0)
+    {
+        puts(array[lines-1]);
+        fputs(array[lines-1], fe);
+        lines--;
+    }
+
     printf("%d", lines);
     fclose(fp);
     fclose(fe);
+    free(array);
 //    system("pause");
     return 0;
 }
