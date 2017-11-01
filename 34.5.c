@@ -21,15 +21,18 @@ int main() {
 
     }
     char** array;
-    array = (char**)malloc(lines*1000 * sizeof(char*));
+    array = (char**)malloc(lines * sizeof(char*));
+    for(int i = 0; i < lines; i++) {
+        array[i] = (char *) malloc(1000 * sizeof(char));
+    }
     fseek(fp, 0, SEEK_SET);
     int i = 0;
     while (!feof(fp) || i > lines)
     {
         fgets(ptr, 1000, fp);
-        array[i] = ptr;
-        puts(ptr);
-        puts(array[i]);
+        strcpy(array[i], ptr);
+//        puts(ptr);
+//        puts(array[i]);
         i++;
     }
 
@@ -40,11 +43,10 @@ int main() {
         return 1;
     }
 
-    while(lines >= 0)
+    for(int j = (lines-1); j >= 0; j--)
     {
-        puts(array[lines-1]);
-        fputs(array[lines-1], fe);
-        lines--;
+        fputs(array[j], stdout);
+        fputs(array[j], fe);
     }
 
     printf("%d", lines);
